@@ -17,12 +17,13 @@ import DOM.HTML.Window (history)
 import DOM.HTML.Types (HISTORY)
 import Network.HTTP.Affjax (AJAX)
 import Pux (EffModel, noEffects, onlyEffects)
-import Pux.DOM.Events (DOMEvent)
+import Pux.DOM.Events (DOMEvent, targetValue)
 
-
-data PageOneEvent = SetName String | SetAge Int
-
-data Event = PageView Route | Navigate String DOMEvent | PageOne PageOneEvent
+data Event
+  = PageView Route
+  | Navigate String DOMEvent
+  | SetName DOMEvent
+  | SetAge DOMEvent
 
 type AppEffects fx = (ajax :: AJAX, history :: HISTORY, dom :: DOM | fx)
 
@@ -35,4 +36,5 @@ foldp (Navigate url ev) (State st) = onlyEffects (State st) [
       pushState (toForeign {}) (DocumentTitle "") (URL url) h
       pure $ Just $ PageView (match url)
 ]
+foldp (SetName ev) (State st) = noEffects $ State st $ { pageOne = { name = (targetValue ev), age = 0 } }
 foldp _ (State st) = noEffects $ State st
