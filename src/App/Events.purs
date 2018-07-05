@@ -22,7 +22,7 @@ import Pux.DOM.Events (DOMEvent, targetValue)
 data Event
   = PageView Route
   | Navigate String DOMEvent
-  | SetName DOMEvent
+  | SetName String
   | SetAge DOMEvent
 
 type AppEffects fx = (ajax :: AJAX, history :: HISTORY, dom :: DOM | fx)
@@ -36,5 +36,5 @@ foldp (Navigate url ev) (State st) = onlyEffects (State st) [
       pushState (toForeign {}) (DocumentTitle "") (URL url) h
       pure $ Just $ PageView (match url)
 ]
-foldp (SetName ev) (State st) = noEffects $ State st $ { pageOne = { name = (targetValue ev), age = 0 } }
+foldp (SetName ev) (State st) = noEffects $ State st
 foldp _ (State st) = noEffects $ State st
