@@ -9,14 +9,12 @@ type PageOneState = {
     age :: Int
 }
 
-newtype State = State
-  { title :: String
+newtype State = State {
+    title :: String
   , route :: Route
   , loaded :: Boolean
   , pageOne :: PageOneState
 }
-
-
 
 derive instance newtypeState :: Newtype State _
 

@@ -4,6 +4,7 @@ import Prelude (discard)
 import Control.Applicative (pure)
 import App.Routes (Route, match)
 import App.State (State(..))
+import App.PageOne.Reducer (changeName, changeAge)
 import Control.Bind ((=<<), bind)
 import Control.Monad.Eff.Class (liftEff)
 import Data.Function (($))
@@ -17,12 +18,14 @@ import DOM.HTML.Window (history)
 import DOM.HTML.Types (HISTORY)
 import Network.HTTP.Affjax (AJAX)
 import Pux (EffModel, noEffects, onlyEffects)
-import Pux.DOM.Events (DOMEvent)
+import Pux.DOM.Events (DOMEvent, targetValue)
 
-
-data PageOneEvent = SetName String | SetAge Int
-
-data Event = PageView Route | Navigate String DOMEvent | PageOne PageOneEvent
+data Event
+  = PageView Route
+  | Navigate String DOMEvent
+  | SignIn DOMEvent
+  | ChangeName DOMEvent
+  | ChangeAge DOMEvent
 
 type AppEffects fx = (ajax :: AJAX, history :: HISTORY, dom :: DOM | fx)
 
@@ -35,4 +38,15 @@ foldp (Navigate url ev) (State st) = onlyEffects (State st) [
       pushState (toForeign {}) (DocumentTitle "") (URL url) h
       pure $ Just $ PageView (match url)
 ]
+
+foldp (ChangeName ev) state
+  = { state: (changeName (targetValue ev) state)
+    , effects: [] 
+    }
+
+foldp (ChangeAge ev) state
+  = { state: (changeAge (targetValue ev) state)
+    , effects: [] 
+    }
+
 foldp _ (State st) = noEffects $ State st
