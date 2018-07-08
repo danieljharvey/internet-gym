@@ -1,32 +1,31 @@
 module App.Events where
 
-import Prelude (discard)
-import Control.Applicative (pure)
+import App.PageOne.Events (PageOneEvent)
+import App.PageOne.Reducer as P1Reducer
 import App.Routes (Route, match)
 import App.State (State(..))
-import App.PageOne.Reducer (changeName, changeAge)
+import Control.Applicative (pure)
 import Control.Bind ((=<<), bind)
 import Control.Monad.Eff.Class (liftEff)
-import Data.Function (($))
-import Data.Foreign (toForeign)
-import Data.Maybe (Maybe(..))
 import DOM (DOM)
 import DOM.Event.Event (preventDefault)
 import DOM.HTML (window)
 import DOM.HTML.History (DocumentTitle(..), URL(..), pushState)
-import DOM.HTML.Window (history)
 import DOM.HTML.Types (HISTORY)
+import DOM.HTML.Window (history)
+import Data.Foreign (toForeign)
+import Data.Function (($))
+import Data.Maybe (Maybe(..))
 import Network.HTTP.Affjax (AJAX)
+import Prelude (discard)
 import Pux (EffModel, noEffects, onlyEffects)
-import Pux.DOM.Events (DOMEvent, targetValue)
+import Pux.DOM.Events (DOMEvent)
 
 data Event
   = PageView Route
   | Navigate String DOMEvent
-  | SignIn DOMEvent
-  | ChangeName DOMEvent
-  | ChangeAge DOMEvent
-
+  | PageOne (PageOneEvent)
+  
 type AppEffects fx = (ajax :: AJAX, history :: HISTORY, dom :: DOM | fx)
 
 foldp :: ∀ fx. Event -> State -> EffModel State Event (AppEffects fx)
@@ -38,15 +37,7 @@ foldp (Navigate url ev) (State st) = onlyEffects (State st) [
       pushState (toForeign {}) (DocumentTitle "") (URL url) h
       pure $ Just $ PageView (match url)
 ]
-
-foldp (ChangeName ev) state
-  = { state: (changeName (targetValue ev) state)
-    , effects: [] 
-    }
-
-foldp (ChangeAge ev) state
-  = { state: (changeAge (targetValue ev) state)
-    , effects: [] 
-    }
+foldp (PageOne ev) state = noEffects $ newState where
+  newState = P1Reducer.foldp ev state
 
 foldp _ (State st) = noEffects $ State st
