@@ -12,5 +12,8 @@
     "purescript-css": "^3.0.0",
     "purescript-aff": "^3.0.0",
     "purescript-affjax": "^4.0.0"
+  },
+  "devDependencies": {
+    "purescript-spec": "1.0.0"
   }
 }
