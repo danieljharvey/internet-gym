@@ -23,8 +23,8 @@ data Event
   = PageView Route
   | Navigate String DOMEvent
   | SignIn DOMEvent
-  | UsernameChange DOMEvent
-  | PasswordChange DOMEvent
+  | ChangeName DOMEvent
+  | ChangeAge DOMEvent
 
 type AppEffects fx = (ajax :: AJAX, history :: HISTORY, dom :: DOM | fx)
 
@@ -37,5 +37,5 @@ foldp (Navigate url ev) (State st) = onlyEffects (State st) [
       pushState (toForeign {}) (DocumentTitle "") (URL url) h
       pure $ Just $ PageView (match url)
 ]
-foldp (UsernameChange ev) (State st) =  { state: State st { pageOne = { name : (targetValue ev), age: 0 } }, effects: [] }
+foldp (ChangeName ev) (State st) =  { state: State st { pageOne = { name : (targetValue ev), age: 0 } }, effects: [] }
 foldp _ (State st) = noEffects $ State st
