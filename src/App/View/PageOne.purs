@@ -1,19 +1,23 @@
 module App.View.PageOne where
 
-import Prelude (bind, discard)
+import Prelude
 import App.Events (Event(..))
 import App.State (State(..))
-import Data.Function (($))
+import Control.Monad.Eff.Class (liftEff)
+import Data.Maybe (Maybe(..))
+import DOM (DOM)
+import DOM.Event.Event (preventDefault)
+import Pux (EffModel, noEffects)
+import Pux.DOM.Events (DOMEvent, onSubmit, onChange, targetValue)
 import Pux.DOM.HTML (HTML)
-import React.DOM.Props (onChange)
-import Text.Smolder.HTML (form, div, h1, p, input)
-import Text.Smolder.Markup ((!), text, (#!))
+import Text.Smolder.HTML (button, form, input)
 import Text.Smolder.HTML.Attributes (name, type', value)
+import Text.Smolder.Markup ((!), (#!), text)
 
 view :: State -> HTML Event
 view (State st) =
-  div do
-    _ <- h1 $ text "Page One"
-    p $ text "Don't forget to fill in every single part"
-    form ! name "page-one" $ do
-      input ! type' "text" ! value st.pageOne.name #! onChange SetName
+  form ! name "signin" #! onSubmit SignIn $ do
+    input ! type' "text" ! value st.pageOne.name #! onChange UsernameChange
+    input ! type' "password" ! value st.pageOne.name #! onChange PasswordChange
+    button ! type' "submit" $ text "Sign In"
+
