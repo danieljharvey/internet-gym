@@ -4,7 +4,7 @@ import Prelude (discard)
 import Control.Applicative (pure)
 import App.Routes (Route, match)
 import App.State (State(..))
-import App.PageOne.Reducer (changeName)
+import App.PageOne.Reducer (changeName, changeAge)
 import Control.Bind ((=<<), bind)
 import Control.Monad.Eff.Class (liftEff)
 import Data.Function (($))
@@ -38,5 +38,15 @@ foldp (Navigate url ev) (State st) = onlyEffects (State st) [
       pushState (toForeign {}) (DocumentTitle "") (URL url) h
       pure $ Just $ PageView (match url)
 ]
-foldp (ChangeName ev) state = { state: (changeName state (targetValue ev)), effects: [] }
+
+foldp (ChangeName ev) state
+  = { state: (changeName (targetValue ev) state)
+    , effects: [] 
+    }
+
+foldp (ChangeAge ev) state
+  = { state: (changeAge (targetValue ev) state)
+    , effects: [] 
+    }
+
 foldp _ (State st) = noEffects $ State st
