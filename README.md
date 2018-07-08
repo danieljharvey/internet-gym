@@ -1,56 +1,19 @@
-# pux-starter-app
+# Internet Gym
 
-The [starter app](http://github.com/alexmingoia/pux-starter-app) is a skeleton
-Pux project configured with webpack and supporting hot-reload for rapid
-development.
+### Huge annoying signup form
 
-For isomorphic rendering and routing a more complex configuration is available in the
-[`isomorphic`](https://github.com/alexmingoia/pux-starter-app/tree/isomorphic) branch.
+So a few years ago I bought the domain Internet Gym because I figured that would somehow turn into profit, and I never really worked out what I wanted to do with it. Anyway, I realised what the site should be, and what the  world really needs, is a giant never ending incredibly frustrating sign up form with loads of really fussy validation so I thought "this is a good opportunity to try using a language that is incredibly frustrating because of it's fussy validation" so here we are.
 
-## Installation
+Jokes aside though, Pux is nice, this is fun, learning is OK, etc.
 
-Clone the repository and run `npm install` to get started:
+### How to get it working because I'm sure you give a shit about that
 
-```sh
-git clone git://github.com/alexmingoia/pux-starter-app.git my-awesome-pux-app
-cd my-awesome-pux-app
-npm install
-npm start
-```
+Clone the repo: `git clone https://github.com/danieljharvey/internet-gym`
 
-After compiling the app should be available at `http://localhost:8080`.
+Enter the vortex: `cd internet-gym`
 
-### Directory structure
+Upgrade your sword: `yarn install`
 
-- `src`: Application source code.
-  - `src/App/Config.js`: Configuration values.
-  - `src/App/Config.purs`: Configuration type.
-  - `src/App/Events.purs`: Application event type and foldp function.
-  - `src/App/Routes.purs`: Routes.
-  - `src/App/State.purs`: Application state type and init function.
-  - `src/App/View/Homepage.purs`: Home page.
-  - `src/App/View/Layout.purs`: App layout.
-  - `src/App/View/NotFound.purs`: 404 page.
-  - `src/Main.purs`: PureScript entry point.
-- `static`: Static files served with application.
-- `support`: Support files for building.
-  - `support/entry.js`: Webpack entry point. Handles hot reloading.
-- `bower.json`: Bower package configuration.
-- `package.json`: Node package configuration.
-- `webpack.config.js`: Webpack configuration.
+Reticulate splines: `yarn start`
 
-### NPM scripts
-
-#### watch
-
-`npm start` or `npm run watch` will start a development server, which
-hot-reloads your application when sources changes.
-
-#### serve
-
-`NODE_ENV=production npm run serve` builds your application and starts a
-production server.
-
-#### build
-
-`npm run build` builds application client and server bundles.
+Licence: MIT or whatever, if you go near this nonsense it's your loss to be honest.
