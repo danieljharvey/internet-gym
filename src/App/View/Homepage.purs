@@ -12,8 +12,8 @@ import Text.Smolder.Markup ((!), (#!), text)
 
 view :: State -> HTML Event
 view s =
-  div do
+  div ! className "homePage" $ do
     h1 $ text "Pux"
     a ! className "guide" ! href "https://www.purescript-pux.org/" $ text "Guide"
     a ! className "github" ! href "https://github.com/alexmingoia/purescript-pux/" $ text "GitHub"
-    a ! className "guide" ! href "/" #! onClick (Navigate "/page/1") $ text "Page 1"
+    a ! className "pageOne" ! href "/" #! onClick (Navigate "/page/1") $ text "Page 1"
