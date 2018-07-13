@@ -23,7 +23,7 @@ initialPageOneState :: PageOneState
 initialPageOneState = {
   name: "",
   age: 0,
-  likesDogs: true
+  likesDogs: false
 }
 
 init :: String -> State
