@@ -37,7 +37,4 @@ foldp (Navigate url ev) (State st) = onlyEffects (State st) [
       pushState (toForeign {}) (DocumentTitle "") (URL url) h
       pure $ Just $ PageView (match url)
 ]
-foldp (PageOne ev) state = noEffects $ newState where
-  newState = P1Reducer.foldp ev state
-
-foldp _ (State st) = noEffects $ State st
+foldp (PageOne ev) (State st) = noEffects $ State st { pageOne = (P1Reducer.foldp ev st.pageOne) }

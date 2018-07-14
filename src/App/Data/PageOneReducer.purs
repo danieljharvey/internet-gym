@@ -1,25 +1,23 @@
 module App.PageOne.Reducer where
 
-import App.State (State(..))
+import Prelude (not)
+import App.State (PageOneState)
 import App.PageOne.Events (PageOneEvent(..))
 import Pux.DOM.Events (targetValue)
 import Data.Maybe (Maybe(..))
 import Data.Int (fromString)
 
 -- this is a simplified reducer that returns no effects, just State
-foldp :: PageOneEvent -> State -> State
-foldp (ChangeName ev) state = changeName (targetValue ev) state
+foldp :: PageOneEvent -> PageOneState -> PageOneState
+foldp (ChangeFirstName ev) pageOne = pageOne { firstName = (targetValue ev) }
+foldp (ChangeLastName ev) pageOne = pageOne { lastName = (targetValue ev) }
+foldp (ChangeMiddleName ev) pageOne = pageOne { middleName = (targetValue ev) }
+foldp (ChangeAge ev) pageOne = case (fromString (targetValue ev)) of
+    Just age -> pageOne { age = age }
+    _ -> pageOne
 
-foldp (ChangeAge ev) state = changeAge (targetValue ev) state
+foldp (ChangeLikesDogs ev) pageOne = pageOne { likesDogs = not pageOne.likesDogs }
 
 foldp _ state
   = state
 
-changeName :: String -> State -> State
-changeName name (State st) = State st { pageOne = { name : name, age: st.pageOne.age } }
-
-changeAge :: String -> State -> State
-changeAge ageString (State st) = case (fromString ageString) of
-    Just age -> State st { pageOne = { name : st.pageOne.name, age: age } }
-    _ -> State st
-    
