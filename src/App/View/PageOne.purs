@@ -4,11 +4,13 @@ import App.Events (Event(..))
 import App.PageOne.Events (PageOneEvent(..))
 import App.State (State(..), PageOneState)
 import App.PageOne.Validation (validateState)
-import Prelude (($), discard, show, (<<<))
+import Prelude (($), discard, show, (<<<), (<>))
 import Data.Either (Either(..), isLeft)
+import Data.Foldable (for_)
+import Data.List (List(..), foldr)
 import Pux.DOM.Events (onSubmit, onChange)
 import Pux.DOM.HTML (HTML)
-import Text.Smolder.HTML (button, form, input, label, div, p)
+import Text.Smolder.HTML (button, form, input, label, div, p, ul, li)
 import Text.Smolder.HTML.Attributes (className, name, type', value, disabled)
 import Text.Smolder.Markup ((!), (#!), text)
 
@@ -17,9 +19,9 @@ showBool x = case x of
   true  -> "1"
   false -> "0"
 
-showValidation :: Either String PageOneState -> String
+showValidation :: Either (List String) PageOneState -> List String
 showValidation valid = case valid of
-  Right _    -> "VALID"
+  Right _    -> Cons "Great stuff!" $ Nil
   (Left str) -> str
 
 getDisabled :: PageOneState -> String
@@ -46,7 +48,7 @@ view (State st) =
       label do text "Dogs: pretty OK?"
       input ! name "likesDogs" ! type' "checkbox"  #! onChange (PageOne <<< ChangeLikesDogs)
     div ! className "validation" $ do
-      p do text (showValidation $ validateState st.pageOne)
+      ul do for_ (showValidation $ validateState st.pageOne) \str -> li $ text str
     div ! className "formSection" $ do
       button ! type' "submit" ! disabled (getDisabled st.pageOne) $ text "Sign In"
 
