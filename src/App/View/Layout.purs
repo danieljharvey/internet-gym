@@ -54,14 +54,13 @@ css = do
   fromString "form.pageOne" ? do
     fontSize (16.0 #px)
     margin (20.0 #px) (20.0 #px) (20.0 #px) (20.0 #px)
-    backgroundColor grey
+    backgroundColor (rgb 160 180 180)
     display flex
     flexDirection column
   
   fromString "div.formSection" ? do
-    border solid (2.0 #px) green
     padding (10.0 #px) (10.0 #px) (10.0 #px) (10.0 #px)
-    margin (20.0 #px) (20.0 #px) (20.0 #px) (20.0 #px)
+    margin (10.0 #px) (10.0 #px) (10.0 #px) (10.0 #px)
     display flex
     flexDirection row
     alignItems baseline
