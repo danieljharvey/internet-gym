@@ -1,8 +1,9 @@
 module App.PageOne.Validation where
 
-import Prelude ((==), compare, Ordering(GT), (=<<))
+import Prelude ((==), compare, Ordering(GT), (=<<), (>))
 import App.State (PageOneState)
 import Data.Either (Either(..))
+import Data.String.CodeUnits (length)
 
 validateState :: PageOneState -> Either String PageOneState
 validateState state = isLikesDogs =<< isOverTen state
@@ -16,3 +17,8 @@ isOverTen :: PageOneState -> Either String PageOneState
 isOverTen state = case (compare state.age 10) == GT of 
     true  -> Right state
     false -> Left "Absolutely too young for this damn gym"
+
+noFirstName :: PageOneState -> Either String PageOneState
+noFirstName state = case (length state.firstName) > 3 of 
+    true  -> Right state
+    false -> Left "First name is too short"

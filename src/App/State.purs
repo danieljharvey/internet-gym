@@ -5,9 +5,11 @@ import App.Routes (Route, match)
 import Data.Newtype (class Newtype)
 
 type PageOneState = {
-    name      :: String,
-    age       :: Int,
-    likesDogs :: Boolean
+    firstName  :: String,
+    lastName   :: String,
+    middleName :: String,
+    age        :: Int,
+    likesDogs  :: Boolean
 }
 
 newtype State = State {
@@ -21,7 +23,9 @@ derive instance newtypeState :: Newtype State _
 
 initialPageOneState :: PageOneState
 initialPageOneState = {
-  name: "",
+  firstName: "",
+  lastName: "",
+  middleName: "",
   age: 0,
   likesDogs: false
 }

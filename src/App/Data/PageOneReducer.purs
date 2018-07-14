@@ -9,7 +9,9 @@ import Data.Int (fromString)
 
 -- this is a simplified reducer that returns no effects, just State
 foldp :: PageOneEvent -> PageOneState -> PageOneState
-foldp (ChangeName ev) pageOne = pageOne { name = (targetValue ev) }
+foldp (ChangeFirstName ev) pageOne = pageOne { firstName = (targetValue ev) }
+foldp (ChangeLastName ev) pageOne = pageOne { lastName = (targetValue ev) }
+foldp (ChangeMiddleName ev) pageOne = pageOne { middleName = (targetValue ev) }
 foldp (ChangeAge ev) pageOne = case (fromString (targetValue ev)) of
     Just age -> pageOne { age = age }
     _ -> pageOne

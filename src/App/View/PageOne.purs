@@ -31,11 +31,17 @@ view :: State -> HTML Event
 view (State st) =
   form ! name "signin" ! className "pageOne" #! onSubmit (PageOne <<< SignIn) $ do
     div ! className "formSection" $ do
-      label do text "Name"
-      input ! type' "text" ! value st.pageOne.name #! onChange  (PageOne <<< ChangeName)
+      label do text "First name"
+      input ! type' "text" ! value st.pageOne.firstName #! onChange (PageOne <<< ChangeFirstName)
+    div ! className "formSection" $ do
+      label do text "Middle name"
+      input ! type' "text" ! value st.pageOne.middleName #! onChange (PageOne <<< ChangeMiddleName)
+    div ! className "formSection" $ do
+      label do text "Last name"
+      input ! type' "text" ! value st.pageOne.lastName #! onChange (PageOne <<< ChangeLastName)
     div ! className "formSection" $ do
       label do text "Age"
-      input ! type' "text" ! value (show st.pageOne.age) #! onChange  (PageOne <<< ChangeAge)
+      input ! type' "text" ! value (show st.pageOne.age) #! onChange (PageOne <<< ChangeAge)
     div ! className "formSection" $ do
       label do text "Dogs: pretty OK?"
       input ! name "likesDogs" ! type' "checkbox"  #! onChange (PageOne <<< ChangeLikesDogs)
