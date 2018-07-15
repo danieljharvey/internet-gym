@@ -12,11 +12,20 @@ type PageOneState = {
     likesDogs  :: Boolean
 }
 
+type PageTwoState = {
+    firstName  :: String,
+    lastName   :: String,
+    middleName :: String,
+    age        :: Int,
+    likesDogs  :: Boolean
+}
+
 newtype State = State {
     title   :: String
   , route   :: Route
   , loaded  :: Boolean
   , pageOne :: PageOneState
+  , pageTwo :: PageTwoState
 }
 
 derive instance newtypeState :: Newtype State _
@@ -30,10 +39,20 @@ initialPageOneState = {
   likesDogs: false
 }
 
+initialPageTwoState :: PageTwoState
+initialPageTwoState = {
+  firstName: "",
+  lastName: "",
+  middleName: "",
+  age: 0,
+  likesDogs: false
+}
+
 init :: String -> State
 init url = State
   { title: config.title
   , route: match url
   , loaded: false
   , pageOne: initialPageOneState
+  , pageTwo: initialPageTwoState
   }

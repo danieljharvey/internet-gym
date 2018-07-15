@@ -6,6 +6,7 @@ import App.State (State(..))
 import App.View.Homepage as Homepage
 import App.View.NotFound as NotFound
 import App.View.PageOne as PageOne
+import App.View.PageTwo as PageTwo
 import CSS (CSS, alignItems, backgroundColor, borderRadius, color, display, flex, flexGrow, fontSize, fromString, inlineBlock, justifyContent, key, margin, marginLeft, marginRight, marginTop, padding, px, spaceBetween, value, (?))
 import CSS.Border (border, solid)
 import CSS.Common (baseline)
@@ -28,7 +29,8 @@ view (State st) =
 
     case st.route of
       (Home) -> Homepage.view (State st)
-      (FormPage _) -> PageOne.view (State st)
+      (FormPage 1) -> PageOne.view (State st)
+      (FormPage _) -> PageTwo.view (State st)
       (NotFound url) -> NotFound.view (State st)
 
 css :: CSS

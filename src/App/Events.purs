@@ -1,7 +1,9 @@
 module App.Events where
 
 import App.PageOne.Events (PageOneEvent)
+import App.PageTwo.Events (PageTwoEvent)
 import App.PageOne.Reducer as P1Reducer
+import App.PageTwo.Reducer as P2Reducer
 import App.Routes (Route, match)
 import App.State (State(..))
 import Control.Applicative (pure)
@@ -25,6 +27,7 @@ data Event
   = PageView Route
   | Navigate String DOMEvent
   | PageOne (PageOneEvent)
+  | PageTwo (PageTwoEvent)
   
 type AppEffects fx = (ajax :: AJAX, history :: HISTORY, dom :: DOM | fx)
 
@@ -38,3 +41,4 @@ foldp (Navigate url ev) (State st) = onlyEffects (State st) [
       pure $ Just $ PageView (match url)
 ]
 foldp (PageOne ev) (State st) = noEffects $ State st { pageOne = (P1Reducer.foldp ev st.pageOne) }
+foldp (PageTwo ev) (State st) = noEffects $ State st { pageTwo = (P2Reducer.foldp ev st.pageTwo) }
