@@ -4,8 +4,8 @@ import Pux.DOM.Events (DOMEvent)
 
 data PageTwoEvent
   = SignIn DOMEvent
-  | ChangeFirstName DOMEvent
-  | ChangeMiddleName DOMEvent
-  | ChangeLastName DOMEvent
-  | ChangeAge DOMEvent
-  | ChangeLikesDogs DOMEvent
+  | ChangeFirstLine DOMEvent
+  | ChangeSecondLine DOMEvent
+  | ChangeCity DOMEvent
+  | ChangePostCode DOMEvent
+  | ChangePhoneNumber DOMEvent
