@@ -3,14 +3,14 @@ module App.View.PageOne where
 import App.Events (Event(..))
 import App.PageOne.Events (PageOneEvent(..))
 import App.State (State(..), PageOneState)
-import App.PageOne.Validation (validateState)
-import Prelude (($), discard, show, (<<<), (<>))
+import App.PageOne.Validation (validateState, PageOneError)
+import Prelude (($), discard, show, (<<<), map)
 import Data.Either (Either(..), isLeft)
 import Data.Foldable (for_)
-import Data.List (List(..), foldr)
+import Data.List (List(Nil, Cons))
 import Pux.DOM.Events (onSubmit, onChange)
 import Pux.DOM.HTML (HTML)
-import Text.Smolder.HTML (button, form, input, label, div, p, ul, li)
+import Text.Smolder.HTML (button, form, input, label, div, ul, li)
 import Text.Smolder.HTML.Attributes (className, name, type', value, disabled)
 import Text.Smolder.Markup ((!), (#!), text)
 
@@ -19,10 +19,10 @@ showBool x = case x of
   true  -> "1"
   false -> "0"
 
-showValidation :: Either (List String) PageOneState -> List String
+showValidation :: Either (List PageOneError) PageOneState -> List String
 showValidation valid = case valid of
-  Right _    -> Cons "Great stuff!" $ Nil
-  (Left str) -> str
+  Right _      -> Cons "Great stuff!" $ Nil
+  (Left error) -> map show error
 
 getDisabled :: PageOneState -> String
 getDisabled pageOne = case (isLeft (validateState pageOne)) of 
