@@ -2,7 +2,8 @@ module App.View.PageTwo where
 
 import App.Events (Event(..))
 import App.PageTwo.Events (PageTwoEvent(..))
-import App.State (State(..), PageTwoState)
+import App.State (State(..))
+import App.PageTwo.State (PageTwoState)
 import App.PageTwo.Validation (validateState, PageTwoError)
 import Prelude (($), discard, show, (<<<), map)
 import Data.Either (Either(..), isLeft)
@@ -33,20 +34,20 @@ view :: State -> HTML Event
 view (State st) =
   form ! name "signin" ! className "PageTwo" #! onSubmit (PageTwo <<< SignIn) $ do
     div ! className "formSection" $ do
-      label do text "First name"
-      input ! type' "text" ! value st.pageTwo.firstName #! onChange (PageTwo <<< ChangeFirstName)
+      label do text "First line of address"
+      input ! type' "text" ! value st.pageTwo.firstLine #! onChange (PageTwo <<< ChangeFirstName)
     div ! className "formSection" $ do
-      label do text "Middle name"
-      input ! type' "text" ! value st.pageTwo.middleName #! onChange (PageTwo <<< ChangeMiddleName)
+      label do text "Second line of address"
+      input ! type' "text" ! value st.pageTwo.secondLine #! onChange (PageTwo <<< ChangeFirstName)
     div ! className "formSection" $ do
-      label do text "Last name"
-      input ! type' "text" ! value st.pageTwo.lastName #! onChange (PageTwo <<< ChangeLastName)
+      label do text "City"
+      input ! type' "text" ! value st.pageTwo.city #! onChange (PageTwo <<< ChangeFirstName)
     div ! className "formSection" $ do
-      label do text "Age"
-      input ! type' "text" ! value (show st.pageTwo.age) #! onChange (PageTwo <<< ChangeAge)
+      label do text "Postcode"
+      input ! type' "text" ! value st.pageTwo.postCode #! onChange (PageTwo <<< ChangeFirstName)
     div ! className "formSection" $ do
-      label do text "Dogs: pretty OK?"
-      input ! name "likesDogs" ! type' "checkbox"  #! onChange (PageTwo <<< ChangeLikesDogs)
+      label do text "Phone number"
+      input ! type' "text" ! value st.pageTwo.phoneNumber #! onChange (PageTwo <<< ChangeFirstName)
     div ! className "validation" $ do
       ul do for_ (showValidation $ validateState st.pageTwo) \str -> li $ text str
     div ! className "formSection" $ do

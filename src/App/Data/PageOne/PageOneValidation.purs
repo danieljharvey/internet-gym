@@ -1,7 +1,7 @@
 module App.PageOne.Validation where
 
 import App.Utils.Validation (combineValidators, validator)
-import App.State (PageOneState)
+import App.PageOne.State (PageOneState)
 import Data.Either (Either)
 import Data.List (List, elem)
 import Data.Show (class Show)
