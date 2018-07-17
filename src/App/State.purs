@@ -3,6 +3,7 @@ module App.State where
 import App.Config (config)
 import App.Routes (Route, match)
 import Data.Newtype (class Newtype)
+import App.Dog
 
 type PageOneState = {
     firstName  :: String,
@@ -17,6 +18,7 @@ newtype State = State {
   , route   :: Route
   , loaded  :: Boolean
   , pageOne :: PageOneState
+  , dogs    :: DogState
 }
 
 derive instance newtypeState :: Newtype State _
@@ -36,4 +38,5 @@ init url = State
   , route: match url
   , loaded: false
   , pageOne: initialPageOneState
+  , dogs: initialDogState
   }
