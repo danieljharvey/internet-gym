@@ -1,20 +1,41 @@
 module App.PageTwo.Validation where
 
-import App.Utils.Validation (combineValidators)
+import App.Utils.Validation (combineValidators, validator)
 import App.PageTwo.State (PageTwoState)
 import Data.Either (Either)
 import Data.List (List)
 import Data.Show (class Show)
-import Prelude ((<>))
+import Prelude ((==), const, ($), not)
 
-data PageTwoError = NoDogs | TooYoung | BadFirstName String | BadLastName String
+data PageTwoError = FirstLineEmpty
+                  | SecondLineEmpty
+                  | CityEmpty
+                  | PostCodeEmpty
+                  | PhoneNumberEmpty 
+
+type PageTwoValidator = PageTwoState -> Either (List PageTwoError) PageTwoState
 
 instance showPageTwoError :: Show PageTwoError where
-  show NoDogs              = "No dog love please, this is a place of hygiene."
-  show TooYoung            = "Absolutely too young for this damn gym."
-  show (BadFirstName name) = "I'm afraid we don't allow " <> name <> "s in here."
-  show (BadLastName name)  = "I'm afraid we don't like the " <> name <> " family around here."
+  show FirstLineEmpty   = "First line of address is empty"
+  show SecondLineEmpty  = "Second line of address is empty"
+  show CityEmpty        = "City is empty"
+  show PostCodeEmpty    = "Post code is empty"
+  show PhoneNumberEmpty = "Phone number is empty"
 
-validateState :: PageTwoState -> Either (List PageTwoError) PageTwoState
-validateState state = combineValidators [] state
+validateState :: PageTwoValidator
+validateState state = combineValidators [isFirstLineEmpty, isSecondLineEmpty, isCityEmpty, isPostCodeEmpty, isPhoneNumberEmpty] state
 
+isFirstLineEmpty :: PageTwoValidator
+isFirstLineEmpty = validator (\s -> not $ s.firstLine == "") (const FirstLineEmpty)
+
+isSecondLineEmpty :: PageTwoValidator
+isSecondLineEmpty = validator (\s -> not $ s.secondLine == "") (const SecondLineEmpty)
+
+isCityEmpty :: PageTwoValidator
+isCityEmpty = validator (\s -> not $ s.city == "") (const CityEmpty)
+
+isPostCodeEmpty :: PageTwoValidator
+isPostCodeEmpty = validator (\s -> not $ s.postCode == "") (const PostCodeEmpty)
+
+isPhoneNumberEmpty :: PageTwoValidator
+isPhoneNumberEmpty = validator (\s -> not $ s.phoneNumber == "") (const PhoneNumberEmpty)

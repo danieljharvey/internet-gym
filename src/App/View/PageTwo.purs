@@ -11,7 +11,7 @@ import Data.Foldable (for_)
 import Data.List (List(Nil, Cons))
 import Pux.DOM.Events (onSubmit, onChange)
 import Pux.DOM.HTML (HTML)
-import Text.Smolder.HTML (button, form, input, label, div, ul, li)
+import Text.Smolder.HTML (button, form, input, label, div, ul, li, option, select)
 import Text.Smolder.HTML.Attributes (className, name, type', value, disabled)
 import Text.Smolder.Markup ((!), (#!), text)
 
@@ -35,19 +35,24 @@ view (State st) =
   form ! name "signin" ! className "PageTwo" #! onSubmit (PageTwo <<< SignIn) $ do
     div ! className "formSection" $ do
       label do text "First line of address"
-      input ! type' "text" ! value st.pageTwo.firstLine #! onChange (PageTwo <<< ChangeFirstName)
+      input ! type' "text" ! value st.pageTwo.firstLine #! onChange (PageTwo <<< ChangeFirstLine)
     div ! className "formSection" $ do
       label do text "Second line of address"
-      input ! type' "text" ! value st.pageTwo.secondLine #! onChange (PageTwo <<< ChangeFirstName)
+      input ! type' "text" ! value st.pageTwo.secondLine #! onChange (PageTwo <<< ChangeSecondLine)
     div ! className "formSection" $ do
       label do text "City"
-      input ! type' "text" ! value st.pageTwo.city #! onChange (PageTwo <<< ChangeFirstName)
+      input ! type' "text" ! value st.pageTwo.city #! onChange (PageTwo <<< ChangeCity)
     div ! className "formSection" $ do
       label do text "Postcode"
-      input ! type' "text" ! value st.pageTwo.postCode #! onChange (PageTwo <<< ChangeFirstName)
+      input ! type' "text" ! value st.pageTwo.postCode #! onChange (PageTwo <<< ChangePostCode)
     div ! className "formSection" $ do
       label do text "Phone number"
-      input ! type' "text" ! value st.pageTwo.phoneNumber #! onChange (PageTwo <<< ChangeFirstName)
+      input ! type' "text" ! value st.pageTwo.phoneNumber #! onChange (PageTwo <<< ChangePhoneNumber)
+    div ! className "formSection" $ do
+      label do text "Pre-existing medical conditions"
+      select ! name "medical" $ do
+         option ! value "horse" $ do text "Horses"
+         option ! value "dog" $ do text "Dogses"
     div ! className "validation" $ do
       ul do for_ (showValidation $ validateState st.pageTwo) \str -> li $ text str
     div ! className "formSection" $ do

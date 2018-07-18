@@ -9,3 +9,4 @@ data PageTwoEvent
   | ChangeCity DOMEvent
   | ChangePostCode DOMEvent
   | ChangePhoneNumber DOMEvent
+  | ChangeAnimal DOMEvent
