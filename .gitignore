@@ -1,5 +1,6 @@
 node_modules/
 bower_components/
+.psc-package/
 output/
 dist/
 static/dist/
