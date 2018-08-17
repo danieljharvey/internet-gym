@@ -1,15 +1,15 @@
-const appConfig = require('./src/App/Config.js').config
-const path = require('path')
-const webpack = require('webpack')
-const isProd = process.env.NODE_ENV === 'production'
+const appConfig = require("./src/App/Config.js").config;
+const path = require("path");
+const webpack = require("webpack");
+const isProd = process.env.NODE_ENV === "production";
 
-const entries = [path.join(__dirname, 'support/entry.js')]
+const entries = [path.join(__dirname, "support/entry.js")];
 
 const plugins = [
   new webpack.DefinePlugin({
-    'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+    "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV)
   })
-]
+];
 
 if (isProd) {
   plugins.push(
@@ -17,51 +17,50 @@ if (isProd) {
       minimize: true,
       debug: false
     })
-  )
+  );
 }
 
 module.exports = {
   entry: entries,
   context: __dirname,
-  target: 'web',
+  target: "web",
   output: {
-    path: path.join(__dirname, 'static', 'dist'),
-    filename: 'bundle.js',
+    path: path.join(__dirname, "static", "dist"),
+    filename: "bundle.js",
     publicPath: appConfig.public_path
   },
   module: {
     loaders: [
       {
         test: /\.purs$/,
-        loader: 'purs-loader',
+        loader: "purs-loader",
         exclude: /node_modules/,
-        query: isProd ? {
-          bundle: true,
-          bundleOutput: 'static/dist/bundle.js'
-        } : {
-          psc: 'psa',
-          pscIde: true
-        }
+        query: isProd
+          ? {
+              bundle: true,
+              bundleOutput: "static/dist/bundle.js",
+              "psc-package": true
+            }
+          : {
+              psc: "psa",
+              pscIde: true,
+              "psc-package": true
+            }
       }
-    ],
+    ]
   },
   plugins: plugins,
   resolveLoader: {
-    modules: [
-      path.join(__dirname, 'node_modules')
-    ]
+    modules: [path.join(__dirname, "node_modules")]
   },
   resolve: {
     alias: {
-      'react': 'preact-compat',
-      'react-dom': 'preact-compat',
-      'create-react-class': 'preact-compat/lib/create-react-class'
+      react: "preact-compat",
+      "react-dom": "preact-compat",
+      "create-react-class": "preact-compat/lib/create-react-class"
     },
-    modules: [
-      'node_modules',
-      'bower_components'
-    ],
-    extensions: ['.js', '.purs']
+    modules: ["node_modules", "bower_components", ".psc-package"],
+    extensions: [".js", ".purs"]
   },
   performance: { hints: false },
   stats: {
@@ -77,4 +76,4 @@ module.exports = {
     modules: false,
     chunkModules: false
   }
-}
+};
