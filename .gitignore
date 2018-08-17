@@ -1,12 +1,15 @@
 node_modules/
 bower_components/
 .psc-package/
+.pulp-cache/
 output/
 dist/
-static/dist/
+static/dist
 .cache/
+.cache
 .psci_modules
 npm-debug.log
 yarn-error.log
 **DS_Store
 **.psc-ide-port
+*.swp

@@ -1,4 +1,3 @@
-import Main from "../output/Main";
+import { main, initialState } from "../output/Main/index.js";
 
-console.log("begin!");
-Main.main();
+main()(initialState)();
