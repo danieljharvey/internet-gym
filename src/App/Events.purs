@@ -4,23 +4,24 @@ import App.PageOne.Events (PageOneEvent)
 import App.PageOne.Reducer as P1Reducer
 import App.Routes (Route, match)
 import App.State (State(..))
-import Control.Monad.Aff (attempt)
+import Effect.Aff (attempt)
 import Control.Applicative (pure)
 import Control.Bind ((=<<), bind)
-import Control.Monad.Eff.Class (liftEff)
 import Data.Argonaut (class DecodeJson, decodeJson, (.?))
-import DOM (DOM)
-import DOM.Event.Event (preventDefault)
-import DOM.HTML (window)
-import DOM.HTML.History (DocumentTitle(..), URL(..), pushState)
-import DOM.HTML.Types (HISTORY)
-import DOM.HTML.Window (history)
-import Data.Foreign (toForeign)
 import Data.Function (($))
 import Data.Maybe (Maybe(..))
 import Data.Either (Either(Left, Right), either)
-import Network.HTTP.Affjax (AJAX, get)
+import Network.HTTP.Affjax (get)
 import Prelude (discard, (<>), show)
+import Effect.Class (liftEffect)
+import Web.Event.Event (preventDefault)
+import Web.HTML (window)
+import Web.HTML.History (DocumentTitle(..), URL(..), pushState)
+import Web.HTML.Window (history)
+import Foreign (unsafeToForeign)
+import Data.Function (($))
+import Data.Maybe (Maybe(..))
+import Prelude (discard)
 import Pux (EffModel, noEffects, onlyEffects)
 import Pux.DOM.Events (DOMEvent)
 import App.Dog
@@ -33,15 +34,13 @@ data Event
   | RequestDogs
   | ReceiveDogs (Either String Dog)
   
-type AppEffects fx = (ajax :: AJAX, history :: HISTORY, dom :: DOM | fx)
-
-foldp :: ∀ fx. Event -> State -> EffModel State Event (AppEffects fx)
+foldp :: Event -> State -> EffModel State Event
 foldp (PageView route) (State st) = noEffects $ State st { route = route, loaded = true }
 foldp (Navigate url ev) (State st) = onlyEffects (State st) [
-    liftEff do
+    liftEffect do
       preventDefault ev
       h <- history =<< window
-      pushState (toForeign {}) (DocumentTitle "") (URL url) h
+      pushState (unsafeToForeign {}) (DocumentTitle "") (URL url) h
       pure $ Just $ PageView (match url)
 ]
 foldp (PageOne ev) (State st) = noEffects $ State st { pageOne = (P1Reducer.foldp ev st.pageOne) }
