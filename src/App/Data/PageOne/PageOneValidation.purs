@@ -3,11 +3,14 @@ module App.PageOne.Validation where
 import App.Utils.Validation (combineValidators, validator)
 import App.PageOne.State (PageOneState)
 import Data.Either (Either)
+import Data.Eq (class Eq)
 import Data.List (List, elem)
 import Data.Show (class Show)
 import Prelude ((==), compare, Ordering(GT), (<>), ($), not, const)
 
 data PageOneError = NoDogs | TooYoung | BadFirstName String | BadLastName String
+
+derive instance eqPageOneError :: Eq PageOneError
 
 instance showPageOneError :: Show PageOneError where
   show NoDogs              = "No dog love please, this is a place of hygiene."
