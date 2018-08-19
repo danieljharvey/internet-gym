@@ -2,12 +2,5 @@
   "name": "internet-gym",
   "set": "psc-0.12.0-20180814",
   "source": "https://github.com/purescript/package-sets",
-  "depends": [
-    "pux",
-    "css",
-    "aff",
-    "affjax",
-    "argonaut",
-    "record"
-  ]
+  "depends": ["pux", "css", "aff", "affjax", "argonaut", "record", "spec"]
 }
