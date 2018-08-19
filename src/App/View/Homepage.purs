@@ -15,5 +15,5 @@ view s =
   div ! className "homePage" $ do
     h1 $ text "Pux"
     a ! className "guide" ! href "https://www.purescript-pux.org/" $ text "Guide"
-    a ! className "github" ! href "https://github.com/alexmingoia/purescript-pux/" $ text "GitHub"
     a ! className "pageOne" ! href "/" #! onClick (Navigate "/page/1") $ text "Page 1"
+    a ! className "github" ! href "/" #! onClick (Navigate "/page/2") $ text "Page 2"
