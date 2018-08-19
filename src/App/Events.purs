@@ -1,7 +1,9 @@
 module App.Events where
 
 import App.PageOne.Events (PageOneEvent)
+import App.PageTwo.Events (PageTwoEvent)
 import App.PageOne.Reducer as P1Reducer
+import App.PageTwo.Reducer as P2Reducer
 import App.Routes (Route, match)
 import App.State (State(..))
 import Effect.Aff (attempt)
@@ -11,7 +13,7 @@ import Data.Argonaut (class DecodeJson, decodeJson, (.?))
 import Data.Function (($))
 import Data.Maybe (Maybe(..))
 import Data.Either (Either(Left, Right), either)
-import Network.HTTP.Affjax (get)
+import Affjax (get)
 import Prelude (discard, (<>), show)
 import Effect.Class (liftEffect)
 import Web.Event.Event (preventDefault)
@@ -31,6 +33,7 @@ data Event
   = PageView Route
   | Navigate String DOMEvent
   | PageOne (PageOneEvent)
+  | PageTwo (PageTwoEvent)
   | RequestDogs
   | ReceiveDogs (Either String Dog)
   
@@ -44,6 +47,7 @@ foldp (Navigate url ev) (State st) = onlyEffects (State st) [
       pure $ Just $ PageView (match url)
 ]
 foldp (PageOne ev) (State st) = noEffects $ State st { pageOne = (P1Reducer.foldp ev st.pageOne) }
+foldp (PageTwo ev) (State st) = noEffects $ State st { pageTwo = (P2Reducer.foldp ev st.pageTwo) }
 
 foldp (ReceiveDogs (Left err)) (State st) =
   noEffects $ State st { dogs = {status : "Error fetching todos: " <> show err, dogs: [] } }
@@ -52,9 +56,10 @@ foldp (ReceiveDogs (Right dogs)) (State st) =
 foldp (RequestDogs) (State st) =
   { state: State st { dogs = { dogs: [], status: "Fetching todos..." } }
   , effects: [ do
-      res <- attempt $ get "https://dog.ceo/api/breeds/image/random"
+      res <- attempt $ get json "https://dog.ceo/api/breeds/image/random"
       let decode r = decodeJson r.response :: Either String Dog
       let dogs = either (Left <<< show) decode res
       pure $ Just $ ReceiveDogs dogs
     ]
   }
+

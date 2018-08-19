@@ -1,9 +1,9 @@
 module Test.Main where
 
 import Prelude
-import Effect
-import Control.Logger.Console (CONSOLE, log)
+import Effect (Effect)
+import Effect.Class.Console (log)
 
-main :: forall e. Eff (console :: CONSOLE | e) Unit
+main :: Effect Unit
 main = do
   log "You should add some tests."
