@@ -3,6 +3,7 @@ module App.PageTwo.Validation where
 import App.Utils.Validation (combineValidators, validator)
 import App.PageTwo.State (PageTwoState)
 import Data.Either (Either)
+import Data.Eq
 import Data.List (List)
 import Data.Show (class Show)
 import Prelude ((==), const, ($), not)
@@ -13,7 +14,11 @@ data PageTwoError = FirstLineEmpty
                   | PostCodeEmpty
                   | PhoneNumberEmpty 
 
-type PageTwoValidator = PageTwoState -> Either (List PageTwoError) PageTwoState
+derive instance eqPageTwoError :: Eq PageTwoError
+
+type PageTwoValidation = Either (List PageTwoError) PageTwoState
+
+type PageTwoValidator = PageTwoState -> PageTwoValidation
 
 instance showPageTwoError :: Show PageTwoError where
   show FirstLineEmpty   = "First line of address is empty"

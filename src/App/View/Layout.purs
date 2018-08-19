@@ -53,7 +53,7 @@ css = do
     textTransform uppercase
     letterSpacing (6.0 #px)
 
-  fromString "form.pageOne" ? do
+  fromString "form" ? do
     fontSize (16.0 #px)
     margin (20.0 #px) (20.0 #px) (20.0 #px) (20.0 #px)
     backgroundColor (rgb 160 180 180)
@@ -67,6 +67,9 @@ css = do
     flexDirection row
     alignItems baseline
     justifyContent spaceBetween
+
+  fromString "div.formSection.invalid" ? do
+    backgroundColor (rgb 180 120 120)
   
   fromString ".formSection input" ? do
     display flex
