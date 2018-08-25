@@ -1,17 +1,16 @@
 module App.Dog where
 
+import App.Types.Dog (Dog(..))
 import App.Types.Event (Event)
 import App.Types.State (State(..))
+import Data.Foldable
 import Prelude (($))
 import Pux.DOM.HTML (HTML)
-import Text.Smolder.HTML (div, h1, ul, li)
-import Text.Smolder.HTML.Attributes (className)
-import Text.Smolder.Markup (text, (!))
-import Data.Foldable (for_)
+import Text.Smolder.HTML (div, img, ul)
+import Text.Smolder.HTML.Attributes (className, src)
+import Text.Smolder.Markup ((!))
 
 view :: State -> HTML Event
-view (State s) =
+view (State st) =
   div ! className "dog" $ do
-    h1 $ text "dogs"
-    -- for_ (s.dogs.dogs) (\str -> h1 $ text str.message)
-
+    ul do for_ (st.dogs.dogs) (\(Dog dog) -> img ! src dog.message)

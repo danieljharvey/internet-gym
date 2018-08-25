@@ -16,5 +16,5 @@ view s =
     h1 $ text "Internet Gym"
     a ! className "pageOne" ! href "/" #! onClick (Navigate "/page/1") $ text "Page 1"
     a ! className "github" ! href "/" #! onClick (Navigate "/page/2") $ text "Page 2"
-    a ! className "guide" #! onClick (Navigate "/dogs/") $ text "Dogs"
+    a ! className "guide" #! onClick (Navigate "/dogs") $ text "Dogs"
 

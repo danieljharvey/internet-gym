@@ -19,6 +19,7 @@ import Web.Event.Event (preventDefault)
 import Web.HTML (window)
 import Web.HTML.History (DocumentTitle(..), URL(..), pushState)
 import Web.HTML.Window (history)
+
 import Data.Argonaut.Core as J
 import Data.Argonaut (decodeJson)
 import Data.HTTP.Method (Method(..))
@@ -26,8 +27,12 @@ import Effect.Console (log)
 import Network.HTTP.Affjax as AX
 import Network.HTTP.Affjax.Response as AXRes
 
+
 apiPath :: String
 apiPath = "https://dog.ceo/api/breeds/image/random"
+
+
+  
 
 foldp :: Event -> State -> EffModel State Event
 foldp (PageView route) (State st) = noEffects $ State st { route = route, loaded = true }

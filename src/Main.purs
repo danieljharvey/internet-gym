@@ -14,7 +14,7 @@ import Pux.Renderer.React (renderToDOM)
 import Effect (Effect)
 import Control.Bind ((=<<), bind, discard)
 import Control.Applicative (pure)
-import Signal ((~>), constant)
+import Signal ((~>))
 
 type WebApp = App (DOMEvent -> Event) Event State
 

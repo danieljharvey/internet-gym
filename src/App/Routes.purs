@@ -26,4 +26,4 @@ toURL :: Route -> String
 toURL (NotFound url) = url
 toURL (Home) = "/"
 toURL (FormPage num) = "/page/" <> show num
-toURL (DogPage) = "/dogs/"
+toURL (DogPage) = "/dogs"
