@@ -1,10 +1,10 @@
 module App.View.PageTwo where
 
-import App.Events (Event(..))
+import App.Types.Event (Event(..))
 import App.PageTwo.Events (PageTwoEvent(..))
 import App.PageTwo.State (PageTwoState)
 import App.PageTwo.Validation (PageTwoError(..), PageTwoValidation, validateState)
-import App.State (State(..))
+import App.Types.State (State(..))
 import App.View.Validations (makeValidDiv)
 import Data.Either (Either(..), isLeft)
 import Data.Foldable (for_)

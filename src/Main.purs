@@ -1,8 +1,10 @@
 module Main where
 
-import App.Events (Event(..), foldp)
+import App.Events (foldp)
+import App.Types.Event (Event(..))
 import App.Routes (match)
-import App.State (State, init)
+import App.State (init)
+import App.Types.State (State)
 import App.View.Layout (view)
 import Web.HTML (window)
 import Pux (App, start)
@@ -24,12 +26,16 @@ main url state = do
   -- | Map a signal of URL changes to PageView actions.
   let routeSignal = urlSignal ~> \r -> PageView (match r)
 
+  let fetchEffect = urlSignal ~> \r -> RequestDogs
+
+  let inputs = [routeSignal, fetchEffect]
+
   -- | Start the app.
   app <- start
     { initialState: state
     , view
     , foldp
-    , inputs: [routeSignal] }
+    , inputs: inputs }
 
   -- | Render to the DOM
   renderToDOM "#app" app.markup app.input

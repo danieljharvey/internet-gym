@@ -6,4 +6,4 @@ import Text.Smolder.HTML (div, h2)
 import Text.Smolder.Markup (text)
 
 view :: ∀ st ev. st -> HTML ev
-view st = div $ h2 $ text "FAILURE"
+view st = div $ h2 $ text "FAILURE to find shit"
