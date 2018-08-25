@@ -1,7 +1,7 @@
 module App.View.Homepage where
 
-import App.Events (Event(..))
-import App.State (State)
+import App.Types.Event (Event(..))
+import App.Types.State (State)
 import Control.Bind (discard)
 import Data.Function (($))
 import Pux.DOM.HTML (HTML)
@@ -16,4 +16,5 @@ view s =
     h1 $ text "Pux"
     a ! className "guide" ! href "https://www.purescript-pux.org/" $ text "Guide"
     a ! className "github" ! href "https://github.com/alexmingoia/purescript-pux/" $ text "GitHub"
-    a ! className "pageOne" ! href "/" #! onClick (Navigate "/page/1") $ text "Page 1"
+    a ! className "pageOne" #! onClick (Navigate "/page/1") $ text "Page 1"
+    a ! className "pageOne" #! onClick (Navigate "/dogs/") $ text "Dogs"

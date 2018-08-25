@@ -1,8 +1,9 @@
 module App.View.Layout where
 
-import App.Events (Event)
+import App.Types.Event (Event)
 import App.Routes (Route(..))
-import App.State (State(..))
+import App.Types.State
+import App.Dog as Dog
 import App.View.Homepage as Homepage
 import App.View.NotFound as NotFound
 import App.View.PageOne as PageOne
@@ -29,6 +30,7 @@ view (State st) =
     case st.route of
       (Home) -> Homepage.view (State st)
       (FormPage _) -> PageOne.view (State st)
+      (DogPage) -> Dog.view (State st)
       (NotFound url) -> NotFound.view (State st)
 
 css :: CSS

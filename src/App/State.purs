@@ -1,27 +1,9 @@
 module App.State where
 
 import App.Config (config)
-import App.Routes (Route, match)
-import Data.Newtype (class Newtype)
-import App.Dog
-
-type PageOneState = {
-    firstName  :: String,
-    lastName   :: String,
-    middleName :: String,
-    age        :: Int,
-    likesDogs  :: Boolean
-}
-
-newtype State = State {
-    title   :: String
-  , route   :: Route
-  , loaded  :: Boolean
-  , pageOne :: PageOneState
-  , dogs    :: DogState
-}
-
-derive instance newtypeState :: Newtype State _
+import App.Routes (match)
+import App.Types.State
+import App.Types.Dog (DogState)
 
 initialPageOneState :: PageOneState
 initialPageOneState = {
@@ -32,6 +14,10 @@ initialPageOneState = {
   likesDogs: false
 }
 
+initialDogState :: DogState
+initialDogState = { dogs: [], status: "Nothing loaded from server yet" }
+
+
 init :: String -> State
 init url = State
   { title: config.title
@@ -40,3 +26,6 @@ init url = State
   , pageOne: initialPageOneState
   , dogs: initialDogState
   }
+
+
+  

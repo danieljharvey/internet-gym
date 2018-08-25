@@ -1,8 +1,9 @@
 module App.View.PageOne where
 
-import App.Events (Event(..))
+import App.Dog as D
+import App.Types.Event (Event(..))
 import App.PageOne.Events (PageOneEvent(..))
-import App.State (State(..), PageOneState)
+import App.Types.State (State(..), PageOneState)
 import App.PageOne.Validation (validateState, PageOneError)
 import Prelude (($), discard, show, (<<<), map)
 import Data.Either (Either(..), isLeft)
