@@ -7,6 +7,7 @@ import App.Dog as Dog
 import App.View.Homepage as Homepage
 import App.View.NotFound as NotFound
 import App.View.PageOne as PageOne
+import App.View.PageTwo as PageTwo
 import CSS (CSS, alignItems, backgroundColor, borderRadius, color, display, flex, flexGrow, fontSize, fromString, inlineBlock, justifyContent, key, margin, marginLeft, marginRight, marginTop, padding, px, spaceBetween, value, (?))
 import CSS.Border (border, solid)
 import CSS.Common (baseline)
@@ -29,8 +30,9 @@ view (State st) =
 
     case st.route of
       (Home) -> Homepage.view (State st)
-      (FormPage _) -> PageOne.view (State st)
       (DogPage) -> Dog.view (State st)
+      (FormPage 1) -> PageOne.view (State st)
+      (FormPage _) -> PageTwo.view (State st)
       (NotFound url) -> NotFound.view (State st)
 
 css :: CSS
@@ -53,7 +55,7 @@ css = do
     textTransform uppercase
     letterSpacing (6.0 #px)
 
-  fromString "form.pageOne" ? do
+  fromString "form" ? do
     fontSize (16.0 #px)
     margin (20.0 #px) (20.0 #px) (20.0 #px) (20.0 #px)
     backgroundColor (rgb 160 180 180)
@@ -67,6 +69,9 @@ css = do
     flexDirection row
     alignItems baseline
     justifyContent spaceBetween
+
+  fromString "div.formSection.invalid" ? do
+    backgroundColor (rgb 180 120 120)
   
   fromString ".formSection input" ? do
     display flex

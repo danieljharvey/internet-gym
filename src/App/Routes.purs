@@ -1,5 +1,6 @@
 module App.Routes where
 
+import Data.Eq
 import Data.Function (($))
 import Data.Functor ((<$), (<$>))
 import Data.Semigroup ((<>))
@@ -10,6 +11,8 @@ import Pux.Router
 import Control.Alt ((<|>))
 
 data Route = Home | FormPage Int | DogPage | NotFound String
+
+derive instance eqRoute :: Eq Route
 
 match :: String -> Route
 match url = fromMaybe (NotFound url) $ router url $

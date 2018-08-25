@@ -5,20 +5,20 @@ import App.PageOne.Reducer as P1Reducer
 import App.Routes (match)
 import App.Types.State (State(..))
 import App.Types.Event (Event(..))
+import App.PageTwo.Reducer as P2Reducer
 import Control.Applicative (pure)
 import Control.Bind ((=<<), bind)
-import Data.Either (Either(..))
 import Data.Function (($))
 import Data.Maybe (Maybe(..))
+import Data.Either (Either(Left, Right))
+import Prelude (discard, (<>), show)
 import Effect.Class (liftEffect)
 import Foreign (unsafeToForeign)
-import Prelude (discard, show, (<>))
 import Pux (EffModel, noEffects, onlyEffects)
 import Web.Event.Event (preventDefault)
 import Web.HTML (window)
 import Web.HTML.History (DocumentTitle(..), URL(..), pushState)
 import Web.HTML.Window (history)
-
 import Data.Argonaut.Core as J
 import Data.Argonaut (decodeJson)
 import Data.HTTP.Method (Method(..))
@@ -26,10 +26,8 @@ import Effect.Console (log)
 import Network.HTTP.Affjax as AX
 import Network.HTTP.Affjax.Response as AXRes
 
-
 apiPath :: String
 apiPath = "https://dog.ceo/api/breeds/image/random"
-
 
 foldp :: Event -> State -> EffModel State Event
 foldp (PageView route) (State st) = noEffects $ State st { route = route, loaded = true }
@@ -46,6 +44,7 @@ foldp (Navigate url ev) (State st) = onlyEffects (State st) [
     ]
 
 foldp (PageOne ev) (State st) = noEffects $ State st { pageOne = (P1Reducer.foldp ev st.pageOne) }
+foldp (PageTwo ev) (State st) = noEffects $ State st { pageTwo = (P2Reducer.foldp ev st.pageTwo) }
 
 foldp (ReceiveDogs (Left err)) (State st) =
   noEffects $ State st { dogs = {status : "Error fetching todos: " <> show err, dogs: [] } }
@@ -64,4 +63,3 @@ foldp (RequestDogs) (State st) =
     ]
   }
 
-  

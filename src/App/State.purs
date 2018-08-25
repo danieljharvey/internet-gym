@@ -1,22 +1,18 @@
 module App.State where
 
+import App.PageOne.State (PageOneState, initialPageOneState)
+import App.PageTwo.State (PageTwoState, initialPageTwoState)
+import App.Routes (Route, match)
+import Data.Newtype (class Newtype)
+import App.Dog
+
 import App.Config (config)
 import App.Routes (match)
 import App.Types.State
 import App.Types.Dog (DogState)
 
-initialPageOneState :: PageOneState
-initialPageOneState = {
-  firstName: "",
-  lastName: "",
-  middleName: "",
-  age: 0,
-  likesDogs: false
-}
-
 initialDogState :: DogState
 initialDogState = { dogs: [], status: "Nothing loaded from server yet" }
-
 
 init :: String -> State
 init url = State
@@ -24,6 +20,7 @@ init url = State
   , route: match url
   , loaded: false
   , pageOne: initialPageOneState
+  , pageTwo: initialPageTwoState
   , dogs: initialDogState
   }
 

@@ -13,8 +13,8 @@ import Text.Smolder.Markup ((!), (#!), text)
 view :: State -> HTML Event
 view s =
   div ! className "homePage" $ do
-    h1 $ text "Pux"
-    a ! className "guide" ! href "https://www.purescript-pux.org/" $ text "Guide"
-    a ! className "github" ! href "https://github.com/alexmingoia/purescript-pux/" $ text "GitHub"
-    a ! className "pageOne" #! onClick (Navigate "/page/1") $ text "Page 1"
-    a ! className "pageOne" #! onClick (Navigate "/dogs/") $ text "Dogs"
+    h1 $ text "Internet Gym"
+    a ! className "pageOne" ! href "/" #! onClick (Navigate "/page/1") $ text "Page 1"
+    a ! className "github" ! href "/" #! onClick (Navigate "/page/2") $ text "Page 2"
+    a ! className "guide" #! onClick (Navigate "/dogs/") $ text "Dogs"
+

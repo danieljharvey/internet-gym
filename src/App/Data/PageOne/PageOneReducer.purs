@@ -1,7 +1,7 @@
 module App.PageOne.Reducer where
 
 import Prelude (not)
-import App.Types.State (PageOneState)
+import App.PageOne.State (PageOneState)
 import App.PageOne.Events (PageOneEvent(..))
 import Pux.DOM.Events (targetValue)
 import Data.Maybe (Maybe(..))

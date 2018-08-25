@@ -3,20 +3,15 @@ module App.Types.State where
 import App.Routes (Route)
 import Data.Newtype (class Newtype)
 import App.Types.Dog (DogState)
-
-type PageOneState = {
-    firstName  :: String,
-    lastName   :: String,
-    middleName :: String,
-    age        :: Int,
-    likesDogs  :: Boolean
-}
+import App.PageOne.State (PageOneState)
+import App.PageTwo.State (PageTwoState)
 
 newtype State = State {
     title   :: String
   , route   :: Route
   , loaded  :: Boolean
   , pageOne :: PageOneState
+  , pageTwo :: PageTwoState
   , dogs    :: DogState
 }
 

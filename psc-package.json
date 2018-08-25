@@ -8,6 +8,8 @@
     "aff",
     "affjax",
     "argonaut",
-    "record"
+    "record",
+    "spec",
+    "test-unit"
   ]
 }
