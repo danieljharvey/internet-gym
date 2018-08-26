@@ -12,7 +12,8 @@
   "scripts": {
     "postinstall": "psc-package install",
     "start": "parcel static/index.html",
-    "test": "pulp test"
+    "test": "pulp test",
+    "format": "./format.sh"
   },
   "author": "Daniel J Harvey",
   "license": "MIT",

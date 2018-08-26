@@ -1,21 +1,18 @@
 module App.Types.Dog where
 
-import Prelude (class Show, bind, pure, ($), (<>))
-
 import Data.Argonaut (class DecodeJson, decodeJson, (.?))
+import Prelude (class Show, bind, pure, ($), (<>))
 
 -- | Because AJAX is effectful and asynchronous, we represent requests and
 -- | responses as input events.
+type DogState
+  = {dogs :: Dogs, status :: String}
 
-type DogState =
-  { dogs :: Dogs
-  , status :: String }
+type Dogs
+  = Array Dog
 
-type Dogs = Array Dog
-
-newtype Dog = Dog
-  { status :: String
-  , message :: String }
+newtype Dog
+  = Dog {status :: String, message :: String}
 
 instance showDog :: Show Dog where
   show :: Dog -> String
@@ -27,4 +24,4 @@ instance decodeJsonDog :: DecodeJson Dog where
     obj <- decodeJson json
     status <- obj .? "status"
     message <- obj .? "message"
-    pure $ Dog { status: status, message: message }
+    pure $ Dog { status, message }

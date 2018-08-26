@@ -1,12 +1,13 @@
 module Test.Routes where
 
 import Prelude
+
+import App.Routes (match, Route(..))
 import Effect (Effect)
 import Test.Unit (suite, test)
 import Test.Unit.Main (runTest)
-import Test.Unit.Assert as Assert
 
-import App.Routes (match, Route(..))
+import Test.Unit.Assert as Assert
 
 main :: Effect Unit
 main = runTest do
